@@ -18,7 +18,7 @@ class Content extends Backend
      * @var \app\admin\model\gonglue\Content
      */
     protected $model = null;
-    protected $noNeedLogin = ['category', 'categoryContent', 'view', 'addComment', 'addContent', 'searchContent', 'likeContent', 'likeComment'];
+    protected $noNeedLogin = ['category', 'categoryContent', 'viewContent', 'viewComment', 'addComment', 'addContent', 'searchContent', 'likeContent', 'likeComment'];
 
     public function _initialize()
     {
@@ -64,26 +64,29 @@ class Content extends Backend
     /**
      * 浏览单个博文
      */
-    public function view(Request $request)
+    public function viewContent(Request $request)
     {
 
         $data = $request->param('content_id');
-        $num = $request->param('num');
-        $page = $request->param('page');
+
 
         $content = new \app\admin\model\gonglue\Content();
         $viewData = $content->where('id', $data)->find();
         $content->where('id', $data)->setInc('views');
+        return json($viewData);
+    }
+
+    /**
+     * 浏览博文的评论
+     */
+    public function viewComment(Request $request) {
+        $data = $request->param('content_id');
+        $num = $request->param('num');
+        $page = $request->param('page');
 
         $contentComment = new \app\admin\model\gonglue\Contentcomment();
         $commentData = $contentComment->where('content_id', $data)->page($page, $num)->select();
-
-        $view = [
-            'viewData' => $viewData,
-            'commentData' => $commentData
-        ];
-        return json($view);
-
+        return json($commentData);
     }
 
     /**

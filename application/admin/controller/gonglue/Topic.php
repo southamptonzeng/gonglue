@@ -19,7 +19,7 @@ class Topic extends Backend
      */
     protected $model = null;
 
-    protected $noNeedLogin = ['hotTopic', 'recommendTopic', 'view', 'addComment', 'addTopic', 'searchTopic', 'likeTopic', 'likeComment'];
+    protected $noNeedLogin = ['hotTopic', 'recommendTopic', 'viewTopic', 'viewComment', 'addComment', 'addTopic', 'searchTopic', 'likeTopic', 'likeComment'];
 
     public function _initialize()
     {
@@ -63,24 +63,30 @@ class Topic extends Backend
     /**
      * 浏览单个话题
      */
-    public function view(Request $request)
+    public function viewTopic(Request $request)
     {
         $data = $request->param('topic_id');
-        $page = $request->param('page');
-        $num = $request->param('num');
+
 
         $topic = new \app\admin\model\gonglue\Topic();
         $viewData = $topic->where('id', $data)->find();
         $topic->where('id', $data)->setInc('views');
 
+        return json($viewData);
+    }
+
+    /**
+     * 浏览具体话题评论
+    */
+    public function viewComment(Request $request)
+    {
+        $data = $request->param('topic_id');
+        $page = $request->param('page');
+        $num = $request->param('num');
+
         $topicComment = new \app\admin\model\gonglue\Topiccomment();
         $commentData = $topicComment->where('topic_id', $data)->page($page, $num)->select();
-
-        $view = [
-            'viewData' => $viewData,
-            'commentData' => $commentData
-        ];
-        return json($view);
+        return json($commentData);
     }
 
     /**
