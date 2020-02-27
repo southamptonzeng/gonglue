@@ -21,20 +21,8 @@ class Gonglue extends Addons
         $menu = [
             [
                 'name'    => 'gonglue',
-                'title'   => '攻略管理',
+                'title'   => '婚庆攻略',
                 'sublist' => [
-
-                    [
-                        'name'    => 'gonglue/topiccomment',
-                        'title'   => '话题评论管理',
-                        'sublist' => [
-                            ['name' => 'gonglue/topiccomment/index', 'title' => '查看'],
-                            ['name' => 'gonglue/topiccomment/add', 'title' => '添加'],
-                            ['name' => 'gonglue/topiccomment/edit', 'title' => '修改'],
-                            ['name' => 'gonglue/topiccomment/del', 'title' => '删除'],
-                            ['name' => 'gonglue/topiccomment/multi', 'title' => '批量更新'],
-                        ]
-                    ],
                     [
                         'name'    => 'gonglue/topic',
                         'title'   => '话题管理',
@@ -48,6 +36,19 @@ class Gonglue extends Addons
                     ],
 
                     [
+                        'name'    => 'gonglue/topiccomment',
+                        'title'   => '话题评论管理',
+                        'sublist' => [
+                            ['name' => 'gonglue/topiccomment/index', 'title' => '查看'],
+                            ['name' => 'gonglue/topiccomment/add', 'title' => '添加'],
+                            ['name' => 'gonglue/topiccomment/edit', 'title' => '修改'],
+                            ['name' => 'gonglue/topiccomment/del', 'title' => '删除'],
+                            ['name' => 'gonglue/topiccomment/multi', 'title' => '批量更新'],
+                        ]
+                    ],
+
+
+                    [
                         'name'    => 'gonglue/contentcategory',
                         'title'   => '内容分类管理',
                         'sublist' => [
@@ -56,18 +57,6 @@ class Gonglue extends Addons
                             ['name' => 'gonglue/contentcategory/edit', 'title' => '修改'],
                             ['name' => 'gonglue/contentcategory/del', 'title' => '删除'],
                             ['name' => 'gonglue/contentcategory/multi', 'title' => '批量更新'],
-                        ]
-                    ],
-                    [
-                        'name'    => 'gonglue/contentcomment',
-                        'title'   => '内容评论管理',
-                        'icon'    => 'fa fa-comment',
-                        'sublist' => [
-                            ['name' => 'gonglue/contentcomment/index', 'title' => '查看'],
-                            ['name' => 'gonglue/contentcomment/add', 'title' => '添加'],
-                            ['name' => 'gonglue/contentcomment/edit', 'title' => '修改'],
-                            ['name' => 'gonglue/contentcomment/del', 'title' => '删除'],
-                            ['name' => 'gonglue/contentcomment/multi', 'title' => '批量更新'],
                         ]
                     ],
                     [
@@ -81,8 +70,19 @@ class Gonglue extends Addons
                             ['name' => 'gonglue/content/del', 'title' => '删除'],
                             ['name' => 'gonglue/content/multi', 'title' => '批量更新'],
                         ]
+                    ],
+                    [
+                        'name'    => 'gonglue/contentcomment',
+                        'title'   => '内容评论管理',
+                        'icon'    => 'fa fa-comment',
+                        'sublist' => [
+                            ['name' => 'gonglue/contentcomment/index', 'title' => '查看'],
+                            ['name' => 'gonglue/contentcomment/add', 'title' => '添加'],
+                            ['name' => 'gonglue/contentcomment/edit', 'title' => '修改'],
+                            ['name' => 'gonglue/contentcomment/del', 'title' => '删除'],
+                            ['name' => 'gonglue/contentcomment/multi', 'title' => '批量更新'],
+                        ]
                     ]
-                    
                 ]
             ]
         ];

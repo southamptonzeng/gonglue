@@ -69,8 +69,14 @@ class Content extends Backend
 
         $data = $request->param('content_id');
 
+        //计算该content评论条数
+        $contentComment = new \app\admin\model\gonglue\Contentcomment();
+        $count = $contentComment->where('content_id', $data)->count();
 
+        //更新评论条数
         $content = new \app\admin\model\gonglue\Content();
+        $content->where('id', $data)->setField('comments', $count);
+
         $viewData = $content->where('id', $data)->find();
         $content->where('id', $data)->setInc('views');
         return json($viewData);
@@ -146,10 +152,18 @@ class Content extends Backend
      * 文章点赞
      */
     public function likeContent(Request $request) {
-        $content_id = $request->param('content_id');
+
+        $data = [
+            'content_id' => $request->param('content_id'),
+            'username' => $request->param('username')
+        ];
 
         $content = new \app\admin\model\gonglue\Content();
-        $content->where('id', $content_id)->setInc('likes');
+        $content->where('id', $data['content_id'])->setInc('likes');
+
+        $contentLike =new \app\admin\model\gonglue\Contentlike();
+        $contentLike->save($data);
+
         $this->success('点赞成功');
     }
 
@@ -157,10 +171,69 @@ class Content extends Backend
      * 文章评论点赞
      */
     public function likeComment(Request $request) {
-        $comment_id = $request->param('comment_id');
+        $data = [
+            'comment_id' => $request->param('comment_id'),
+            'username' => $request->param('username')
+        ];
 
         $comment = new \app\admin\model\gonglue\Contentcomment();
-        $comment->where('id', $comment_id)->setInc('likes');
+        $comment->where('id', $data['comment_id'])->setInc('likes');
+
+        $contentCommentLike = new \app\admin\model\gonglue\Contentcommentlike();
+        $contentCommentLike->save($data);
+
         $this->success('点赞成功','');
+    }
+
+    /**
+     * 内容点赞状态
+     */
+    public function contentLikeStatus(Request $request) {
+        $content_id = $request->param('content_id');
+        $username = $request->param('username');
+
+        $contentLike =new \app\admin\model\gonglue\Contentlike();
+        $res = $contentLike->where('content_id', $content_id)->where('username', $username)->find();
+
+        if (empty($res)) {
+            return json([
+                'code' => 0,
+                'msg' => ''
+            ]);
+        } else {
+            return json(
+                [
+                    'code' => 1,
+                    'msg' => ''
+                ]
+            );
+        }
+
+    }
+
+    /**
+     * 话题评论点赞状态
+     */
+    public function contentCommentLikeStatus(Request $request) {
+        $comment_id = $request->param('comment_id');
+        $username = $request->param('username');
+
+        $contentCommentLike = new \app\admin\model\gonglue\Contentcommentlike();
+        $res = $contentCommentLike->where('comment_id', $comment_id)->where('username', $username)->find();
+
+        if (empty($res)) {
+            return json([
+                'code' => 0,
+                'msg' => ''
+            ]);
+        } else {
+            return json(
+                [
+                    'code' => 1,
+                    'msg' => ''
+                ]
+            );
+        }
+
     }
 }

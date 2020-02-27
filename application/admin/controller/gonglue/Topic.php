@@ -2,7 +2,9 @@
 
 namespace app\admin\controller\gonglue;
 
+use addons\gonglue\Gonglue;
 use app\common\controller\Backend;
+use think\Db;
 use think\Request;
 
 /**
@@ -67,8 +69,13 @@ class Topic extends Backend
     {
         $data = $request->param('topic_id');
 
+        $topicComment = new \app\admin\model\gonglue\Topiccomment();
+        $count = $topicComment->where('topic_id', $data)->count();
 
+        //更新评论条数
         $topic = new \app\admin\model\gonglue\Topic();
+        $topic->where('id', $data)->setField('comments', $count);
+
         $viewData = $topic->where('id', $data)->find();
         $topic->where('id', $data)->setInc('views');
 
@@ -145,10 +152,18 @@ class Topic extends Backend
      * 话题点赞
      */
     public function likeTopic(Request $request) {
-        $content_id = $request->param('topic_id');
+        $data = [
+            'topic_id' => $request->param('topic_id'),
+            'username' => $request->param('username')
+        ];
+
 
         $topic = new \app\admin\model\gonglue\Topic();
-        $topic->where('id', $content_id)->setInc('likes');
+        $topic->where('id', $data['topic_id'])->setInc('likes');
+
+        $topicLike = new \app\admin\model\gonglue\Topiclike();
+        $topicLike->save($data);
+
         $this->success('点赞成功');
     }
 
@@ -157,11 +172,71 @@ class Topic extends Backend
     */
     public function likeComment(Request $request)
     {
-        $comment_id = $request->param('comment_id');
+        $data = [
+            'comment_id' => $request->param('comment_id'),
+            'username' => $request->param('username')
+            ];
 
         $comment = new \app\admin\model\gonglue\Topiccomment();
-        $comment->where('id', $comment_id)->setInc('likes');
+        $comment->where('id', $data['comment_id'])->setInc('likes');
+
+        $topicCommentLike = new \app\admin\model\gonglue\Topiccommentlike();
+        $topicCommentLike->save($data);
+
         $this->success('点赞成功');
+    }
+
+
+    /**
+     * 话题点赞状态
+    */
+    public function topicLikeStatus(Request $request) {
+        $topic_id = $request->param('topic_id');
+        $username = $request->param('username');
+
+        $topicLike = new \app\admin\model\gonglue\Topiclike();
+        $res = $topicLike->where('topic_id', $topic_id)->where('username', $username)->find();
+
+        if (empty($res)) {
+            return json([
+                'code' => 0,
+                'msg' => ''
+            ]);
+        } else {
+            return json(
+                [
+                    'code' => 1,
+                    'msg' => ''
+                ]
+            );
+        }
+
+    }
+
+    /**
+     * 话题评论点赞状态
+    */
+    public function topicCommentLikeStatus(Request $request) {
+        $comment_id = $request->param('comment_id');
+        $username = $request->param('username');
+
+        $topicCommentLike = new \app\admin\model\gonglue\Topiccommentlike();
+        $res = $topicCommentLike->where('comment_id', $comment_id)->where('username', $username)->find();
+
+        if (empty($res)) {
+            return json([
+                'code' => 0,
+                'msg' => ''
+            ]);
+        } else {
+            return json(
+                [
+                    'code' => 1,
+                    'msg' => ''
+                ]
+            );
+        }
+
     }
 
 }

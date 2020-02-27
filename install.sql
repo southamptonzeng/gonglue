@@ -145,3 +145,57 @@ BEGIN;
 INSERT INTO `__PREFIX__gonglue_topiccomment` VALUES (1, 1, 0, 'zengzh', '', '我是评论', 0, 0, 1553606219, 1565316234, 'normal');
 INSERT INTO `__PREFIX__gonglue_topiccomment` VALUES (9, 7, 7, '张明明', '', '俗话说哦的好呀，<span style=\"white-space:normal;\">俗话说哦的好呀，<span style=\"white-space:normal;\">俗话说哦的好呀，<span style=\"white-space:normal;\">俗话说哦的好呀</span></span></span>', 0, 0, 1582455245, 1582455245, 'normal');
 COMMIT;
+
+--
+-- 表的结构 `__PREFIX__gonglue_topiclike`
+--
+
+CREATE TABLE IF NOT EXISTS `__PREFIX__gonglue_topiclike`
+(
+    `id`         int(10) UNSIGNED         NOT NULL AUTO_INCREMENT,
+    `topic_id`   int(10) UNSIGNED         NOT NULL DEFAULT '0' COMMENT '话题ID',
+    `username`   varchar(50)              NOT NULL DEFAULT '' COMMENT '用户名',
+    PRIMARY KEY (`id`),
+    KEY `topic_id` (`topic_id`) USING BTREE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8 COMMENT ='话题点赞表';
+
+
+--
+-- 表的结构 `__PREFIX__gonglue_commentlike`
+--
+
+CREATE TABLE IF NOT EXISTS `__PREFIX__gonglue_topiccommentlike`
+(
+    `id`         int(10) UNSIGNED         NOT NULL AUTO_INCREMENT,
+    `comment_id`   int(10) UNSIGNED         NOT NULL DEFAULT '0' COMMENT '评论ID',
+    `username`   varchar(50)              NOT NULL DEFAULT '' COMMENT '用户名',
+    PRIMARY KEY (`id`),
+    KEY `comment_id` (`comment_id`) USING BTREE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8 COMMENT ='话题评论点赞表';
+
+--
+-- 表的结构 `__PREFIX__gonglue_topiclike`
+--
+
+CREATE TABLE IF NOT EXISTS `__PREFIX__gonglue_contentlike`
+(
+    `id`         int(10) UNSIGNED         NOT NULL AUTO_INCREMENT,
+    `content_id`   int(10) UNSIGNED         NOT NULL DEFAULT '0' COMMENT '内容ID',
+    `username`   varchar(50)              NOT NULL DEFAULT '' COMMENT '用户名',
+    PRIMARY KEY (`id`),
+    KEY `content_id` (`content_id`) USING BTREE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8 COMMENT ='内容点赞表';
+
+
+--
+-- 表的结构 `__PREFIX__gonglue_commentlike`
+--
+
+CREATE TABLE IF NOT EXISTS `__PREFIX__gonglue_contentcommentlike`
+(
+    `id`         int(10) UNSIGNED         NOT NULL AUTO_INCREMENT,
+    `comment_id`   int(10) UNSIGNED         NOT NULL DEFAULT '0' COMMENT '内容评论ID',
+    `username`   varchar(50)              NOT NULL DEFAULT '' COMMENT '用户名',
+    PRIMARY KEY (`id`),
+    KEY `comment_id` (`comment_id`) USING BTREE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8 COMMENT ='内容评论点赞表';
