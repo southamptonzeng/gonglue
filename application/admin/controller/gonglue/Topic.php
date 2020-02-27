@@ -21,7 +21,20 @@ class Topic extends Backend
      */
     protected $model = null;
 
-    protected $noNeedLogin = ['hotTopic', 'recommendTopic', 'viewTopic', 'viewComment', 'addComment', 'addTopic', 'searchTopic', 'likeTopic', 'likeComment'];
+    protected $noNeedLogin =
+        [
+            'hotTopic',
+            'recommendTopic',
+            'viewTopic',
+            'viewComment',
+            'addComment',
+            'addTopic',
+            'searchTopic',
+            'likeTopic',
+            'likeComment',
+            'topicLikeStatus',
+            'topicCommentLikeStatus'
+        ];
 
     public function _initialize()
     {
@@ -112,7 +125,12 @@ class Topic extends Backend
             $topic = new \app\admin\model\gonglue\Topic();
             $topic->where('id', $id)->setInc('comments');
 
-            $this->success('评论添加成功');
+            return json(
+                [
+                    'code' => 1,
+                    'msg' => '评论添加成功'
+                ]
+            );
         } else {
             $this->error($result);
         }
@@ -127,7 +145,12 @@ class Topic extends Backend
         $topic = new \app\admin\model\gonglue\Topic();
         $result = $topic->addTopic($data);
         if ($result == 1) {
-            $this->success('话题添加成功');
+            return json(
+                [
+                    'code' => 1,
+                    'msg' => '话题添加成功'
+                ]
+            );
         } else {
             $this->error($result);
         }
@@ -164,7 +187,12 @@ class Topic extends Backend
         $topicLike = new \app\admin\model\gonglue\Topiclike();
         $topicLike->save($data);
 
-        $this->success('点赞成功');
+        return json(
+            [
+                'code' => 1,
+                'msg' => '点赞成功'
+            ]
+        );
     }
 
     /**
@@ -183,7 +211,12 @@ class Topic extends Backend
         $topicCommentLike = new \app\admin\model\gonglue\Topiccommentlike();
         $topicCommentLike->save($data);
 
-        $this->success('点赞成功');
+        return json(
+            [
+                'code' => 1,
+                'msg' => '点赞成功'
+            ]
+        );
     }
 
 
@@ -210,7 +243,6 @@ class Topic extends Backend
                 ]
             );
         }
-
     }
 
     /**

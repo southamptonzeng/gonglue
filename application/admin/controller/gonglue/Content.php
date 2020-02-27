@@ -18,7 +18,21 @@ class Content extends Backend
      * @var \app\admin\model\gonglue\Content
      */
     protected $model = null;
-    protected $noNeedLogin = ['category', 'categoryContent', 'viewContent', 'viewComment', 'addComment', 'addContent', 'searchContent', 'likeContent', 'likeComment'];
+    protected $noNeedLogin =
+        [
+            'category',
+            'categoryContent',
+            'viewContent',
+            'viewComment',
+            'addComment',
+            'addContent',
+            'searchContent',
+            'likeContent',
+            'likeComment',
+            'contentLikeStatus',
+            'contentCommentLikeStatus'
+
+        ];
 
     public function _initialize()
     {
@@ -109,7 +123,12 @@ class Content extends Backend
             $content = new \app\admin\model\gonglue\Content();
             $content->where('id', $content_id)->setInc('comments');
 
-            $this->success('评论添加成功');
+            return json(
+                [
+                    'code' => 1,
+                    'msg' => '评论添加成功'
+                ]
+            );
         } else {
             $this->error($result);
         }
@@ -126,7 +145,12 @@ class Content extends Backend
         $content = new \app\admin\model\gonglue\Content();
         $result = $content->addContent($data);
         if ($result == 1) {
-            $this->success('文章添加成功');
+            return json(
+                [
+                    'code' => 1,
+                    'msg' => '文章添加成功'
+                ]
+            );
         } else {
             $this->error($result);
         }
@@ -164,7 +188,12 @@ class Content extends Backend
         $contentLike =new \app\admin\model\gonglue\Contentlike();
         $contentLike->save($data);
 
-        $this->success('点赞成功');
+        return json(
+            [
+                'code' => 1,
+                'msg' => '点赞成功'
+            ]
+        );
     }
 
     /**
@@ -182,7 +211,12 @@ class Content extends Backend
         $contentCommentLike = new \app\admin\model\gonglue\Contentcommentlike();
         $contentCommentLike->save($data);
 
-        $this->success('点赞成功','');
+        return json(
+            [
+                'code' => 1,
+                'msg' => '点赞成功'
+            ]
+        );
     }
 
     /**
