@@ -6,6 +6,7 @@ return [
     'Pid'        => '父ID',
     'Username'   => '用户名',
     'Avatar'     => '头像',
+    'Likes' => '点赞',
     'Content'    => '内容',
     'Comments'   => '评论数',
     'Createtime' => '创建时间',

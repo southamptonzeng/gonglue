@@ -9,6 +9,7 @@ return [
     'Username'   => '用户名',
     'Avatar'     => '头像',
     'Views'      => '点击',
+    'Likes' => '点赞',
     'Comments'   => '评论数',
     'Createtime' => '创建时间',
     'Updatetime' => '更新时间',
